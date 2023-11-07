@@ -15,6 +15,7 @@ Correlations between general happiness and released/consumed media genres
 Historically, in many mediums and art forms, the general life Circumstances of the population had a major impact on the nature of the creative work.
 e.g. The dire circumstances of people led to the rise of romanticism in the art and music space.
 This project aims to find out if the general life circumstances and happiness correlates to the releases of modern media, e.g. movies.
+Maybe there is some trend to escapism in times of less happiness.
 
 ## Datasources
 
@@ -39,7 +40,12 @@ Movie and TV show database
 
 <!-- List of work packages ordered sequentially, each pointing to an issue with more details. -->
 
-1. Example Issue [#1][i1]
-2. ...
+1. Analyze datasets [#1][i1]
+2. Clean data for analysis [#2][i2]
+3. Evaluate the data [#3][i3]
+4. Write the report [#4][i4]
 
-[i1]: https://github.com/jvalue/made-template/issues/1
+[i1]: https://github.com/engelharddirk/made-course/issues/1
+[i2]: https://github.com/engelharddirk/made-course/issues/2
+[i3]: https://github.com/engelharddirk/made-course/issues/3
+[i4]: https://github.com/engelharddirk/made-course/issues/4
