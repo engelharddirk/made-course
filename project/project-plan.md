@@ -28,7 +28,7 @@ This project aims to find out if the general life circumstances and happiness co
 Official life satisfaction data from european countries by year.
 
 
-### Datasource1: General happiness in european countries
+### Datasource1: IMDB con-commercial movie and TV-Show Database
 * Metadata URL: https://developer.imdb.com/non-commercial-datasets/
 * Data URL: https://datasets.imdbws.com/title.basics.tsv.gz
 * Data Type: Zipped TSV
