@@ -23,7 +23,7 @@ Maybe there is some trend to escapism in times of less happiness.
 
 ### Datasource1: General happiness in european countries
 * Metadata URL: https://ec.europa.eu/eurostat/databrowser/view/ILC_PW01__custom_71016/bookmark/table?lang=de&bookmarkId=59450ed9-2039-47a5-80b7-b34a948aef30
-* Data URL: https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_pw01/?format=TSV&compressed=true
+* Data URL: https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_pw01/?format=TSV&compressed=false
 * Data Type: TSV
 
 Official life satisfaction data from european countries by year.
