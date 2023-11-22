@@ -1,10 +1,33 @@
 import sqlalchemy as sal
-from sqlalchemy import BIGINT, TEXT, FLOAT
+from sqlalchemy import BIGINT, TEXT, FLOAT, INTEGER, CHAR
 import pandas as pd
 
 FILEPATH = "/data/projectdata.sqlite"
 SATISFACTION_SOURCE = "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_pw01/?format=TSV&compressed=false"
 MOVIES_SOURCE = "https://datasets.imdbws.com/title.basics.tsv.gz"
+
+MOVIES_DTYPE = {
+    'tconst': TEXT,
+    'titleType': TEXT,
+    'primaryTitle': TEXT,
+    'originalTitle': TEXT,
+    'isAdult': TEXT,
+    'startYear': INTEGER,
+    'endYear': INTEGER,
+    'runtimeMinutes': INTEGER,
+    'genres': TEXT
+}
+
+SATISFACTION_DTYPE = {
+    'indic_wb': TEXT,
+    'sex': CHAR,
+    'age': TEXT,
+    'country': TEXT,
+    '2013': TEXT,
+    '2018': TEXT,
+    '2021': TEXT,
+    '2022': TEXT
+}
 
 def prepare_pipeline_engine():
     engine = sal.create_engine(f"sqlite://{FILEPATH}")
@@ -29,8 +52,8 @@ def main():
     engine = prepare_pipeline_engine()
     dataframes = get_dataframes_from_sources()
     dataframes = process_dataframes(dataframes)
-    dataframes[0].to_sql("satisfaction", engine, index=False, if_exists="replace")
-    dataframes[1].to_sql("movies", engine, index=False, if_exists="replace")
+    dataframes[0].to_sql("satisfaction", engine, dtype=SATISFACTION_DTYPE, index=False, if_exists="replace")
+    dataframes[1].to_sql("movies", engine, dtype=MOVIES_DTYPE, index=False, if_exists="replace")
 
 if __name__ == "__main__":
     main()
