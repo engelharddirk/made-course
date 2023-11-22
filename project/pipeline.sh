@@ -1,2 +1,2 @@
 #!/bin/bash
-python3.11 pipeline.py
+python3.11 ./project/pipeline.py
