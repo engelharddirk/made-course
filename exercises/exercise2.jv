@@ -17,8 +17,8 @@ pipeline DBStopsPipeline{
             "IFOPT" oftype IFOPT,
             "NAME" oftype text,
             "Verkehr" oftype VerkehrCode,
-            "Laenge" oftype Dimension,
-            "Breite" oftype Dimension,
+            "Laenge" oftype CoordinateDimension,
+            "Breite" oftype CoordinateDimension,
             "Betreiber_Name" oftype text,
             "Betreiber_Nr" oftype integer,
         ];
@@ -30,11 +30,11 @@ pipeline DBStopsPipeline{
         ->DBStopsTableInterpreter
         ->DBStopsSQLite;
 
-    valuetype Dimension oftype decimal {
-        constraints: [DimensionConstraint];
+    valuetype CoordinateDimension oftype decimal {
+        constraints: [CoordinateDimensionConstraint];
     }
 
-    constraint DimensionConstraint oftype RangeConstraint {
+    constraint CoordinateDimensionConstraint oftype RangeConstraint {
         upperBound: 90;
         lowerBound: -90;
     }
