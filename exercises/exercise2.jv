@@ -1,0 +1,59 @@
+pipeline DBStopsPipeline{
+
+    block DataExtractor oftype HttpExtractor { url: "https://download-data.deutschebahn.com/static/datasets/haltestellen/D_Bahnhof_2020_alle.CSV"; }
+    block DBTextFileInterpreter oftype TextFileInterpreter {}
+    block DBStopsCSVInterpreter oftype CSVInterpreter { delimiter: ";"; }
+    block DBStopsSQLite oftype SQLiteLoader {
+        table: "trainstops";
+        file: "./trainstops.sqlite";
+        dropTable: true;
+    }
+
+    block DBStopsTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns:[
+            "EVA_NR" oftype integer,
+            "DS100" oftype text,
+            "IFOPT" oftype text,
+            "NAME" oftype text,
+            "Verkehr" oftype VerkehrCode,
+            "Laenge" oftype Dimension,
+            "Breite" oftype Dimension,
+            "Betreiber_Name" oftype text,
+            "Betreiber_Nr" oftype integer,
+        ];
+    }
+
+    DataExtractor
+        ->DBTextFileInterpreter
+        ->DBStopsCSVInterpreter
+        ->DBStopsTableInterpreter
+        ->DBStopsSQLite;
+
+    valuetype Dimension oftype decimal {
+        constraints: [DimensionConstraint];
+    }
+
+    constraint DimensionConstraint oftype RangeConstraint {
+        upperBound: 90;
+        lowerBound: -90;
+    }
+
+
+    valuetype VerkehrCode oftype text {
+        constraints: [VerkehrConstraint];
+    }
+
+    constraint VerkehrConstraint on text:
+        value in [
+            "FV", "RV", "nur DPN",
+        ];
+
+    valuetype IFOPT oftype text {
+        constraints: [];
+    }
+
+    constraint IFOPTConstraint oftype RegexConstraint {
+        regex: /^[a-z]{2}:[0-9]+:[0-9]+(?::[0-9]+)?$/;
+    }
+}
