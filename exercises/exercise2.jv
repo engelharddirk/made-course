@@ -14,7 +14,7 @@ pipeline DBStopsPipeline{
         columns:[
             "EVA_NR" oftype integer,
             "DS100" oftype text,
-            "IFOPT" oftype text,
+            "IFOPT" oftype IFOPT,
             "NAME" oftype text,
             "Verkehr" oftype VerkehrCode,
             "Laenge" oftype Dimension,
