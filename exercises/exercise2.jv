@@ -44,15 +44,13 @@ pipeline DBStopsPipeline{
         lowerBound: -90;
     }
 
-
     valuetype VerkehrCode oftype text {
         constraints: [VerkehrConstraint];
     }
 
-    constraint VerkehrConstraint on text:
-        value in [
-            "FV", "RV", "nur DPN",
-        ];
+    constraint VerkehrConstraint oftype AllowlistConstraint {
+        allowlist: ["FV", "RV", "nur DPN"];
+    }
 
     valuetype IFOPT oftype text {
         constraints: [IFOPTConstraint];
