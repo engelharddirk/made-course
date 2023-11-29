@@ -24,9 +24,14 @@ pipeline DBStopsPipeline{
         ];
     }
 
+    block DBStopsColumnDeleter oftype ColumnDeleter {
+        delete: [column J];
+    }
+
     DataExtractor
         ->DBTextFileInterpreter
         ->DBStopsCSVInterpreter
+        ->DBStopsColumnDeleter
         ->DBStopsTableInterpreter
         ->DBStopsSQLite;
 
