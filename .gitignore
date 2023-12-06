@@ -3,3 +3,4 @@
 !/data/.gitkeep
 airports.sqlite
 trainstops.sqlite
+project/__pycache__/pipeline.cpython-311.pyc

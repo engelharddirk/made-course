@@ -1,8 +1,9 @@
 import sqlalchemy as sal
 from sqlalchemy import BIGINT, TEXT, FLOAT, INTEGER, CHAR
 import pandas as pd
+import sys
 
-FILEPATH = "/data/projectdata.sqlite"
+FILEPATH = sys.argv[1]
 SATISFACTION_SOURCE = "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_pw01/?format=TSV&compressed=false"
 MOVIES_SOURCE = "https://datasets.imdbws.com/title.basics.tsv.gz"
 
@@ -46,14 +47,17 @@ def process_dataframes(dataframes):
     df_satisfaction_only_lifesat = df_satisfaction_only_lifesat.rename(columns={"geo\\TIME_PERIOD": "country"})
     return [df_satisfaction_only_lifesat, dataframes[1]]
 
+def save_to_sql(engine, dataframes):
+    dataframes[0].to_sql("satisfaction", engine, dtype=SATISFACTION_DTYPE, index=False, if_exists="replace")
+    dataframes[1].to_sql("movies", engine, dtype=MOVIES_DTYPE, index=False, if_exists="replace")
 
 
 def main():
     engine = prepare_pipeline_engine()
     dataframes = get_dataframes_from_sources()
     dataframes = process_dataframes(dataframes)
-    dataframes[0].to_sql("satisfaction", engine, dtype=SATISFACTION_DTYPE, index=False, if_exists="replace")
-    dataframes[1].to_sql("movies", engine, dtype=MOVIES_DTYPE, index=False, if_exists="replace")
+    save_to_sql(engine, dataframes)
+
 
 if __name__ == "__main__":
     main()
