@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 tests.py "/projectdata.sqlite"
+python3 tests.py "/../data/projectdata.sqlite"
