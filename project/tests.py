@@ -1,6 +1,11 @@
 import pipeline
 import os
 import sys
+import pandas as pd
+
+dummy_movie_data = pd.DataFrame(
+    []
+)
 
 def test_data():
     dataframes = pipeline.get_dataframes_from_sources()
