@@ -61,10 +61,18 @@ def process_dataframes(dataframes):
     df_satisfaction = df_satisfaction[df_satisfaction["age"] == "Y_GE16"]
     df_satisfaction = df_satisfaction[df_satisfaction["sex"] == "T"]
     df_satisfaction = df_satisfaction.drop(columns=['freq', 'unit', 'isced11', 'age', 'sex', 'indic_wb'])
-    df_satisfaction = df_satisfaction.rename(columns={"geo\\TIME_PERIOD": "country", "2013 ": "2013", "2018 ": "2018", "2021 ": "2021", "2022 ": "2022"})
-    df_satisfaction['2013'] = df_satisfaction['2013'].replace(r'^(?![0-9]*\.[0-9] $).*', None, regex=True).astype(float)
-    df_satisfaction['2018'] = df_satisfaction['2018'].replace(r'^(?![0-9]*\.[0-9] $).*', None, regex=True).astype(float)
-    df_satisfaction['2021'] = df_satisfaction['2021'].replace(r'^(?![0-9]*\.[0-9] $).*', None, regex=True).astype(float)
+    df_satisfaction = df_satisfaction.rename(
+    columns={
+        "geo\\TIME_PERIOD": "country", 
+        "2013 ": "2013", 
+        "2018 ": "2018", 
+        "2021 ": "2021", 
+        "2022 ": "2022"
+        }
+    )
+    df_satisfaction['2013'] = df_satisfaction['2013'].replace(r'^(?![0-9]*\.[0-9] $).*', None, regex=True).astype(float) # regex: everything that
+    df_satisfaction['2018'] = df_satisfaction['2018'].replace(r'^(?![0-9]*\.[0-9] $).*', None, regex=True).astype(float) # is not a float 0.0<10.0
+    df_satisfaction['2021'] = df_satisfaction['2021'].replace(r'^(?![0-9]*\.[0-9] $).*', None, regex=True).astype(float) # in str representation
     df_satisfaction['2022'] = df_satisfaction['2022'].replace(r'^(?![0-9]*\.[0-9]$).*', None, regex=True).astype(float)
     df_movies = df_movies.drop('parent_id', axis=1)
     df_movies['date'] = df_movies['date'].replace('N', None)
