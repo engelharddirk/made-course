@@ -75,6 +75,7 @@ def process_dataframes(dataframes):
     df_satisfaction['2021'] = df_satisfaction['2021'].replace(r'^(?![0-9]*\.[0-9] $).*', None, regex=True).astype(float) # in str representation
     df_satisfaction['2022'] = df_satisfaction['2022'].replace(r'^(?![0-9]*\.[0-9]$).*', None, regex=True).astype(float)
     df_movies = df_movies.drop('parent_id', axis=1)
+    df_movies['id'] = df_movies['id'].astype(int)
     df_movies['date'] = df_movies['date'].replace('N', None)
     df_movies['date'] = pd.to_datetime(df_movies['date'])
     
