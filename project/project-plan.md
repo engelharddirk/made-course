@@ -29,12 +29,20 @@ Maybe there is some trend to escapism in times of less happiness.
 Official life satisfaction data from european countries by year.
 
 
-### Datasource2: IMDB con-commercial movie and TV-Show Database
-* Metadata URL: https://developer.imdb.com/non-commercial-datasets/
-* Data URL: https://datasets.imdbws.com/title.basics.tsv.gz
-* Data Type: Zipped TSV
+### Datasource2: OMDB (Open Media Database)
 
-Movie and TV show database
+#### Datasource2.1: OMDB Movie Catalogue
+* Metadata URL: https://www.omdb.org/en/us/content/Help:DataDownload
+* Data URL: http://www.omdb.org/data/all_movies.csv.bz2
+* Data Type: Zipped CSV
+#### Datasource2.2: OMDB Movie Category Catalogue
+* Metadata URL: https://www.omdb.org/en/us/content/Help:DataDownload
+* Data URL: http://www.omdb.org/data/movie_categories.csv.bz2
+* Data Type: Zipped CSV
+#### Datasource2.3: OMDB Movie Category Names
+* Metadata URL: https://www.omdb.org/en/us/content/Help:DataDownload
+* Data URL: http://www.omdb.org/data/category_names.csv.bz2
+* Data Type: Zipped CSV
 
 ## Work Packages
 
