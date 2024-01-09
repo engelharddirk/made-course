@@ -2,7 +2,6 @@ import sqlalchemy as sal
 from sqlalchemy import BIGINT, TEXT, FLOAT, INTEGER, CHAR, BOOLEAN, null, DATE
 import pandas as pd
 import sys
-from datetime import datetime
 
 FILEPATH = sys.argv[1]
 SATISFACTION_SOURCE = "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_pw01/?format=TSV&compressed=false"
@@ -43,7 +42,7 @@ def prepare_pipeline_engine():
     return engine
 
 def get_dataframes_from_sources():
-    df_movies = pd.read_csv(MOVIES_SOURCE, sep=",", escapechar="\\")
+    df_movies = pd.read_csv(MOVIES_SOURCE, sep=",", escapechar="\\", )
     df_movies_categories = pd.read_csv(MOVIES_GENRE_SOURCE, sep=",")
     df_movies_category_names = pd.read_csv(MOVIES_GENRE_NAME_SOURCE, ",")
     df_movies_category_names = df_movies_category_names.loc[df_movies_category_names['language_iso_639_1'] == 'en']
