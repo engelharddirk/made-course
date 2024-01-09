@@ -5,6 +5,7 @@ import sys
 
 FILEPATH = sys.argv[1]
 SATISFACTION_SOURCE = "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_pw01/?format=TSV&compressed=false"
+LIFE_LADDER_SOURCE = 'https://happiness-report.s3.amazonaws.com/2023/DataForTable2.1WHR2023.xls'
 MOVIES_SOURCE = "http://www.omdb.org/data/all_movies.csv.bz2"
 MOVIES_GENRE_SOURCE = "http://www.omdb.org/data/movie_categories.csv.bz2"
 MOVIES_GENRE_NAME_SOURCE = "http://www.omdb.org/data/category_names.csv.bz2"
@@ -46,16 +47,20 @@ def get_dataframes_from_sources():
     df_movies_categories = pd.read_csv(MOVIES_GENRE_SOURCE, sep=",")
     df_movies_category_names = pd.read_csv(MOVIES_GENRE_NAME_SOURCE, ",")
     df_movies_category_names = df_movies_category_names.loc[df_movies_category_names['language_iso_639_1'] == 'en']
+    df_life_ladder = pd.read_excel('https://happiness-report.s3.amazonaws.com/2023/DataForTable2.1WHR2023.xls', decimal=',')
     df_list = [
         pd.read_csv(SATISFACTION_SOURCE, "\t|,"),
         df_movies,
         df_movies_categories,
         df_movies_category_names,
+        df_life_ladder,
     ]
     return df_list
 
 def process_dataframes(dataframes):
     df_movies = dataframes[1]
+    df_life_ladder = dataframes[4]
+    df_life_ladder = df_life_ladder[['Country name', 'year', 'Life Ladder']]
     df_satisfaction = dataframes[0][dataframes[0]["indic_wb"].str.contains("LIFESAT")]
     df_satisfaction = df_satisfaction[df_satisfaction["age"] == "Y_GE16"]
     df_satisfaction = df_satisfaction[df_satisfaction["sex"] == "T"]
@@ -78,13 +83,14 @@ def process_dataframes(dataframes):
     df_movies['date'] = df_movies['date'].replace('N', None)
     df_movies['date'] = pd.to_datetime(df_movies['date'])
     
-    return [df_satisfaction, df_movies, dataframes[2], dataframes[3]]
+    return [df_satisfaction, df_movies, dataframes[2], dataframes[3], df_life_ladder]
 
 def save_to_sql(engine, dataframes):
     dataframes[0].to_sql("satisfaction", engine, dtype=SATISFACTION_DTYPE, index=False, if_exists="replace")
     dataframes[1].to_sql("movies", engine, dtype=MOVIES_DTYPE, index=False, if_exists="replace")
     dataframes[2].to_sql("movie_categories", engine, dtype=MOVIES_GENRE_DTYPE, index=False, if_exists="replace")
     dataframes[3].to_sql("movie_category_names", engine, dtype=MOVIES_GENRE_NAMES_DTYPE, index=False, if_exists="replace")
+    dataframes[4].to_sql("life_ladder", engine, index=False, if_exists="replace")
 
 
 def main():
