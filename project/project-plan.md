@@ -44,6 +44,14 @@ Official life satisfaction data from european countries by year.
 * Data URL: http://www.omdb.org/data/category_names.csv.bz2
 * Data Type: Zipped CSV
 
+#### Datasource3: World Happiness Report 2023
+* Metadata URL: https://worldhappiness.report/ed/2023/#appendices-and-data
+* Data URL: https://happiness-report.s3.amazonaws.com/2023/DataForTable2.1WHR2023.xls
+* Data Type: Excel XLS-File
+
+Life satisfaction data for countries worldwide.
+
+
 ## Work Packages
 
 <!-- List of work packages ordered sequentially, each pointing to an issue with more details. -->
