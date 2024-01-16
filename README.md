@@ -1,3 +1,6 @@
+[![License](https://img.shields.io/badge/License-CC_BY_4.0-orange)](https://creativecommons.org/licenses/by/4.0/)
+[![Tests](https://github.com/engelharddirk/made-course/actions/workflows/project-ci.yml/badge.svg)](https://github.com/engelharddirk/made-course/actions/workflows/project-ci.yml)
+
 # Connections between wellbeing of peeaple and released movie genres
 This repository was created as part of my participation in the [MADE Course](https://oss.cs.fau.de/teaching/specific/made/) at Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU).
 ## Description
