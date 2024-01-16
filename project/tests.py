@@ -23,6 +23,18 @@ dummy_category_data = pd.DataFrame(
      ["20146","10281"]],
      columns=["movie_id","category_id"]
 )
+dummy_movie_country_data = pd.DataFrame(
+    [["26","DE"],
+     ["27","GB"],
+     ["33","US"]],
+     columns=["movie_id","country_code"]
+)
+dummy_life_ladder_data = pd.DataFrame(
+    [["Germany", 2015, 7.037, 10.843, 0.926, 70.100, 0.889, 0.173, 0.412, 0.722, 0.203],
+     ["Germany", 2016, 6.874, 10.857, 0.906, 70.300, 0.871, 0.144, 0.446, 0.709, 0.187],
+     ["Germany", 2017, 7.074, 10.879, 0.892, 70.500, 0.841, 0.141, 0.414, 0.707, 0.196]],
+     columns=["Country name", "year", "Life Ladder", "Log GDP per capita", "Social support", "Healthy life expectancy at birth", "Freedom to make life choices", "Generosity", "Perceptions of corruption", "Positive affect", "Negative affect"]
+)
 dummy_category_name_data = pd.DataFrame(
     [["35","Comedy","en"],
      ["37","Western","de"],
@@ -43,8 +55,9 @@ expected_satisfaction_df = pd.DataFrame(
      columns=["country","2013","2018","2021","2022"]
 )
 
+
 def test_data():
-    dataframes = [dummy_satisfaction_data, dummy_movie_data, dummy_category_data, dummy_category_name_data]
+    dataframes = [dummy_satisfaction_data, dummy_movie_data, dummy_category_data, dummy_category_name_data, dummy_movie_country_data, dummy_life_ladder_data]
     dataframes = pipeline.process_dataframes(dataframes)
     test_data_shape(dataframes)
     test_data_content(dataframes)
