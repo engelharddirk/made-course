@@ -22,6 +22,11 @@ MOVIES_GENRE_DTYPE = {
     'category_id': INTEGER,
 }
 
+MOVIE_COUNTRY_DTYPE = {
+    'movie_id': INTEGER,
+    'country_code': TEXT
+}
+
 MOVIES_GENRE_NAMES_DTYPE = {
     'category_id': INTEGER,
     'name': TEXT,
@@ -37,6 +42,12 @@ SATISFACTION_DTYPE = {
     '2018': FLOAT,
     '2021': FLOAT,
     '2022': FLOAT
+}
+
+LIFE_LADDER_DTYPE = {
+    'Country name': TEXT,
+    'year': INTEGER,
+    'Life Ladder': FLOAT
 }
 
 def prepare_pipeline_engine():
@@ -92,9 +103,9 @@ def save_to_sql(engine, dataframes):
     dataframes[0].to_sql("satisfaction", engine, dtype=SATISFACTION_DTYPE, index=False, if_exists="replace")
     dataframes[1].to_sql("movies", engine, dtype=MOVIES_DTYPE, index=False, if_exists="replace")
     dataframes[2].to_sql("movie_categories", engine, dtype=MOVIES_GENRE_DTYPE, index=False, if_exists="replace")
-    dataframes[3].to_sql("movie_category_names", engine, index=False, if_exists="replace")
-    dataframes[4].to_sql("movie_countries", engine, index=False, if_exists="replace")
-    dataframes[5].to_sql("life_ladder", engine, index=False, if_exists="replace")
+    dataframes[3].to_sql("movie_category_names", engine, dtype=MOVIES_GENRE_NAMES_DTYPE, index=False, if_exists="replace")
+    dataframes[4].to_sql("movie_countries", engine, dtype=MOVIE_COUNTRY_DTYPE, index=False, if_exists="replace")
+    dataframes[5].to_sql("life_ladder", engine, dtype=LIFE_LADDER_DTYPE, index=False, if_exists="replace")
 
 
 def main():
