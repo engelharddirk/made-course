@@ -73,6 +73,7 @@ def get_dataframes_from_sources():
 
 def process_dataframes(dataframes):
     df_movies = dataframes[1]
+    df_category_names = dataframes[3]
     df_life_ladder = dataframes[5]
     df_life_ladder = df_life_ladder[['Country name', 'year', 'Life Ladder']]
     df_satisfaction = dataframes[0][dataframes[0]["indic_wb"].str.contains("LIFESAT")]
@@ -96,8 +97,8 @@ def process_dataframes(dataframes):
     df_movies['id'] = df_movies['id'].astype(int)
     df_movies['date'] = df_movies['date'].replace('N', None)
     df_movies['date'] = pd.to_datetime(df_movies['date'])
-    
-    return [df_satisfaction, df_movies, dataframes[2], dataframes[3], dataframes[4], df_life_ladder]
+    df_category_names['category_id'] = df_category_names['category_id'].astype(int)
+    return [df_satisfaction, df_movies, dataframes[2], df_category_names, dataframes[4], df_life_ladder]
 
 def save_to_sql(engine, dataframes):
     dataframes[0].to_sql("satisfaction", engine, dtype=SATISFACTION_DTYPE, index=False, if_exists="replace")
