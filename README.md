@@ -6,3 +6,4 @@ This repository was created as part of my participation in the [MADE Course](htt
 ## Description
 This project contains a data pipeline that gets information of the OMDB Movie Database, life satisfaction data from eurostat, and happiness statistics from the world from the world happiness report 2023 (containing worldwide subjective happiness surveys for every year starting from 2005).
 The goal is to collect and investigate the necessary data in order to (maybe) find a correlation between general happiness and released movie genres.
+The results of this project can be found in the [final report](https://github.com/engelharddirk/made-course/blob/main/project/report.ipynb)
