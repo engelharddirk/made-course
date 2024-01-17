@@ -44,14 +44,14 @@ def prepare_pipeline_engine():
     return engine
 
 def get_dataframes_from_sources():
-    df_movies = pd.read_csv(MOVIES_SOURCE, sep=",", escapechar="\\", )
-    df_movies_categories = pd.read_csv(MOVIES_GENRE_SOURCE, sep=",")
+    df_movies = pd.read_csv(MOVIES_SOURCE, sep=",", escapechar="\\", engine='python')
+    df_movies_categories = pd.read_csv(MOVIES_GENRE_SOURCE, sep=",", engine='python')
     df_movies_category_names = pd.read_csv(MOVIES_GENRE_NAME_SOURCE, sep=",")
     df_movies_category_names = df_movies_category_names.loc[df_movies_category_names['language_iso_639_1'] == 'en']
     df_movies_countries = pd.read_csv(MOVIES_COUNTRY_SOURCE, sep=",")
     df_life_ladder = pd.read_excel('https://happiness-report.s3.amazonaws.com/2023/DataForTable2.1WHR2023.xls', decimal=',')
     df_list = [
-        pd.read_csv(SATISFACTION_SOURCE, "\t|,"),
+        pd.read_csv(SATISFACTION_SOURCE, sep="\t|,", engine='python'),
         df_movies,
         df_movies_categories,
         df_movies_category_names,
