@@ -1,6 +1,6 @@
 .DS_Store
 /data/*
 !/data/.gitkeep
-airports.sqlite
+*.sqlite
 trainstops.sqlite
 project/__pycache__/pipeline.cpython-311.pyc

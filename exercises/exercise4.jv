@@ -1,0 +1,98 @@
+pipeline DBStopsPipeline{
+
+    block DataExtractor oftype HttpExtractor { url: "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip"; }
+    block ZipArchiveInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+    block FilePicker oftype FilePicker {
+        path: "/data.csv";
+    }
+    block TextFileInterpreter oftype TextFileInterpreter {}
+    block CSVInterpreter oftype CSVInterpreter { delimiter: ";"; }
+    block SQLite oftype SQLiteLoader {
+        table: "temperatures";
+        file: "./temperatures.sqlite";
+        dropTable: true;
+    }
+
+    block TableInterpreter oftype TableInterpreter {
+        header: false;
+        columns:[
+            "Geraet" oftype PositiveInteger,
+            "Hersteller" oftype text,
+            "Model" oftype text,
+            "Monat" oftype IntMonth,
+            "Temperatur" oftype CDegree,
+            "Batterietemperatur" oftype CDegree,
+            "Geraet aktiv" oftype JaNein,
+        ];
+    }
+
+    block ColumnDeleter oftype ColumnDeleter {
+        delete: [column F, column G, column H, column I, column L];
+    }
+
+    DataExtractor
+        ->ZipArchiveInterpreter
+        ->FilePicker
+        ->TextFileInterpreter
+        ->CSVInterpreter
+        ->ColumnDeleter
+        ->TableInterpreter
+        ->TempTransform
+        ->BatTempTransform
+        ->SQLite;
+
+    valuetype IntMonth oftype integer {
+        constraints: [IntMonthConstraint];
+    }
+
+    valuetype PositiveInteger oftype integer {
+        constraints: [PositiveIntegerConstraint];
+    }
+
+    constraint PositiveIntegerConstraint oftype RangeConstraint {
+        lowerBound: 0;
+    }
+
+    constraint IntMonthConstraint oftype RangeConstraint {
+        upperBound: 12;
+        lowerBound: 1;
+    }
+
+    valuetype CDegree oftype integer {
+        constraints: [CDegreeConstraint];
+    }
+
+    constraint CDegreeConstraint oftype RangeConstraint {
+        lowerBound: -100;
+        upperBound: 1000;
+    }
+
+    transform CtoFDegrees {
+        from CDegree oftype decimal;
+        to FDegree oftype decimal;
+        FDegree: (CDegree * 9/5) + 32;
+    }
+
+    block TempTransform oftype TableTransformer {
+        inputColumns: ["Temperatur"];
+        outputColumn: "Temperatur";
+        use: CtoFDegrees;
+    }
+
+     block BatTempTransform oftype TableTransformer {
+        inputColumns: ["Batterietemperatur"];
+        outputColumn: "Batterietemperatur";
+        use: CtoFDegrees;
+    }
+
+    constraint JaNeinConstraint oftype AllowlistConstraint {
+        allowlist: ["Ja", "Nein"];
+    }
+
+    valuetype JaNein oftype text {
+        constraints: [JaNeinConstraint];
+    }
+
+}
