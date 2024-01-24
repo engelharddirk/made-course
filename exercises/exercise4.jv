@@ -1,4 +1,4 @@
-pipeline DBStopsPipeline{
+pipeline Exercise4Pipeline{
 
     block DataExtractor oftype HttpExtractor { url: "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip"; }
     block ZipArchiveInterpreter oftype ArchiveInterpreter {
@@ -14,7 +14,6 @@ pipeline DBStopsPipeline{
         file: "./temperatures.sqlite";
         dropTable: true;
     }
-
     block TableInterpreter oftype TableInterpreter {
         header: false;
         columns:[
@@ -39,8 +38,8 @@ pipeline DBStopsPipeline{
         ->CSVInterpreter
         ->ColumnDeleter
         ->TableInterpreter
-        ->TempTransform
-        ->BatTempTransform
+        ->TempTransformer
+        ->BatTempTransformer
         ->SQLite;
 
     valuetype IntMonth oftype integer {
@@ -75,13 +74,13 @@ pipeline DBStopsPipeline{
         FDegree: (CDegree * 9/5) + 32;
     }
 
-    block TempTransform oftype TableTransformer {
+    block TempTransformer oftype TableTransformer {
         inputColumns: ["Temperatur"];
         outputColumn: "Temperatur";
         use: CtoFDegrees;
     }
 
-     block BatTempTransform oftype TableTransformer {
+    block BatTempTransformer oftype TableTransformer {
         inputColumns: ["Batterietemperatur"];
         outputColumn: "Batterietemperatur";
         use: CtoFDegrees;
