@@ -60,7 +60,7 @@ pipeline DBStopsPipeline{
         lowerBound: 1;
     }
 
-    valuetype CDegree oftype integer {
+    valuetype CDegree oftype decimal {
         constraints: [CDegreeConstraint];
     }
 
