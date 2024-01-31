@@ -8,7 +8,7 @@ import os
 SOURCE_URL="https://gtfs.rhoenenergie-bus.de/GTFS.zip"
 ZIP_PATH="GTFS.zip"
 
-DF_DTYPE = {
+DTYPE = {
     'stop_id': INTEGER,
     'stop_name': TEXT,
     'stop_lat': FLOAT,
@@ -16,20 +16,12 @@ DF_DTYPE = {
     'zone_id': INTEGER
 }
 
-SQL_DTYPE = {
-    'stop_id': 'INTEGER',
-    'stop_name': 'TEXT',
-    'stop_lat': 'FLOAT',
-    'stop_lon': 'FLOAT',
-    'zone_id': 'INTEGER'
-}
-
 def save_to_sql(df):
     engine = sal.create_engine("sqlite:///gtfs.sqlite")
-    df.to_sql("stops", engine, index=False, if_exists="replace", dtype=DF_DTYPE)
+    df.to_sql("stops", engine, index=False, if_exists="replace", dtype=DTYPE)
 
 def get_stops():
-    df = pd.read_csv(ZipFile(ZIP_PATH).open("stops.txt"), dtype=SQL_DTYPE)
+    df = pd.read_csv(ZipFile(ZIP_PATH).open("stops.txt"), )
     return df
 
 def prepare_data():
