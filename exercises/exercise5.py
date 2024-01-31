@@ -28,7 +28,7 @@ def get_stops():
 def prepare_data():
     urllib.request.urlretrieve(SOURCE_URL, ZIP_PATH)
 
-def process_dataframes(df):
+def process_dataframe(df):
     df = df[["stop_id", "stop_name", "stop_lat", "stop_lon", "zone_id"]]
     df = df[df["zone_id"]==2001]
     df = df.query("-90 <= stop_lon <= 90")
@@ -39,7 +39,7 @@ def process_dataframes(df):
 def main():
     prepare_data()
     stops_df = get_stops()
-    stops_df = process_dataframes(stops_df)
+    stops_df = process_dataframe(stops_df)
     save_to_sql(stops_df)
     os.remove(ZIP_PATH)
 
