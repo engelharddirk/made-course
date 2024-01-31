@@ -31,8 +31,7 @@ def prepare_data():
 def process_dataframe(df):
     df = df[["stop_id", "stop_name", "stop_lat", "stop_lon", "zone_id"]]
     df = df[df["zone_id"]==2001]
-    df = df.query("-90 <= stop_lon <= 90")
-    df = df.query("-90 <= stop_lat <= 90")
+    df = df.query("(-90 <= stop_lon <= 90) & (-90 <= stop_lat <= 90)")
     df = df.dropna()
     return df
 
