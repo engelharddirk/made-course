@@ -1,9 +1,10 @@
 from zipfile import ZipFile
 import urllib.request
+import os
 import pandas as pd
 import sqlalchemy as sal
-from sqlalchemy import TEXT, FLOAT, INTEGER, BOOLEAN
-import os
+from sqlalchemy import TEXT, FLOAT, INTEGER
+
 
 SOURCE_URL="https://gtfs.rhoenenergie-bus.de/GTFS.zip"
 ZIP_PATH="GTFS.zip"
@@ -21,7 +22,7 @@ def save_to_sql(df):
     df.to_sql("stops", engine, index=False, if_exists="replace", dtype=DTYPE)
 
 def get_stops():
-    df = pd.read_csv(ZipFile(ZIP_PATH).open("stops.txt"), )
+    df = pd.read_csv(ZipFile(ZIP_PATH).open("stops.txt"))
     return df
 
 def prepare_data():
