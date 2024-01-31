@@ -16,7 +16,7 @@ DF_DTYPE = {
     'zone_id': INTEGER
 }
 
-DTYPE = {
+SQL_DTYPE = {
     'stop_id': 'INTEGER',
     'stop_name': 'TEXT',
     'stop_lat': 'FLOAT',
@@ -29,7 +29,7 @@ def save_to_sql(df):
     df.to_sql("stops", engine, index=False, if_exists="replace", dtype=DF_DTYPE)
 
 def get_stops():
-    df = pd.read_csv(ZipFile(ZIP_PATH).open("stops.txt"))
+    df = pd.read_csv(ZipFile(ZIP_PATH).open("stops.txt"), dtype=SQL_DTYPE)
     return df
 
 def prepare_data():
