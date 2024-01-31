@@ -41,11 +41,12 @@ def process_dataframes(df):
     df = df.query("-90 <= stop_lon <= 90")
     df = df.query("-90 <= stop_lat <= 90")
     df = df.dropna()
+    return df
 
 def main():
     prepare_data()
     stops_df = get_stops()
-    process_dataframes(stops_df)
+    stops_df = process_dataframes(stops_df)
     save_to_sql(stops_df)
     os.remove(ZIP_PATH)
 
